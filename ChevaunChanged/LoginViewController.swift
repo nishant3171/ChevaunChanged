@@ -8,8 +8,11 @@
 
 import UIKit
 import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
+import GoogleSignIn
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     let logoContainerView: UIView = {
         let view = UIView()
@@ -85,7 +88,7 @@ class LoginViewController: UIViewController {
         
         facebookLabel.anchor(top: nil, left: facebookImageView.rightAnchor, bottom: nil, right: nil, centerX: nil, centerY: button.centerYAnchor, topPadding: 0, leftPadding: 15, bottomPadding: 0, rightPadding: 0, height: 0, width: 0)
         
-//        button.addTarget(self, action: #selector(facebookButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(facebookButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -112,7 +115,7 @@ class LoginViewController: UIViewController {
         
         googleLabel.anchor(top: nil, left: googleImageView.rightAnchor, bottom: nil, right: nil, centerX: nil, centerY: button.centerYAnchor, topPadding: 0, leftPadding: 15, bottomPadding: 0, rightPadding: 0, height: 0, width: 0)
         
-//        button.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(googleButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -143,7 +146,7 @@ class LoginViewController: UIViewController {
         addingLoginForm()
         addingOtherLoginButtons()
         
-//        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -203,6 +206,51 @@ class LoginViewController: UIViewController {
             mainTabBarController.setupViewControllers()
             
             self.dismiss(animated: true, completion: nil)
+        })
+    }
+    
+    func facebookButtonTapped() {
+        let facebookLogin = FBSDKLoginManager()
+        
+        facebookLogin.logIn(withReadPermissions: ["email"], from: self) { (result, error) in
+            if error != nil {
+                print("Unable to authenticate with Facebook.")
+            } else if result?.isCancelled == true {
+                print("You are not giving the permissions.")
+            } else {
+                print("Successfully authenticated")
+                let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                self.firebaseAuthentication(credential)
+            }
+        }
+    }
+    
+    func googleButtonTapped() {
+        GIDSignIn.sharedInstance().signIn()
+    }
+    
+    func firebaseAuthentication(_ credential: FIRAuthCredential) {
+        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+            if let error = error {
+                print("Unable to create new user:", error)
+            } else {
+                guard let uid = user?.uid else { return }
+                let userData = ["username": "Profile"]
+                let values = [uid: userData]
+                FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    if let err = err {
+                        print("Unable to store user info: ", err)
+                        return
+                    }
+                    print("Check Firebase Storage.")
+                    
+                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+                    mainTabBarController.setupViewControllers()
+                    
+                    self.dismiss(animated: true, completion: nil)
+                })
+                
+            }
         })
     }
     

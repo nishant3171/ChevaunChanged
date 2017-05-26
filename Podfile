@@ -8,6 +8,12 @@ target 'ChevaunChanged' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+
+  pod 'GoogleSignIn'
+
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
   # Pods for ChevaunChanged
 
 end
