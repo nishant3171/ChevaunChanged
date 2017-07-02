@@ -20,6 +20,7 @@
 		F4EAF5841ED6D62A002B2DAA /* NewProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */; };
 		F4EAF5861ED6D656002B2DAA /* RecentChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAF5851ED6D656002B2DAA /* RecentChatsViewController.swift */; };
 		F4EAF5881ED6E8EA002B2DAA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAF5871ED6E8EA002B2DAA /* LoginViewController.swift */; };
+		F4EFD7AF1EDBFF2100D74A7E /* NewProblemCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EFD7AE1EDBFF2100D74A7E /* NewProblemCategoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProblemViewController.swift; sourceTree = "<group>"; };
 		F4EAF5851ED6D656002B2DAA /* RecentChatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentChatsViewController.swift; sourceTree = "<group>"; };
 		F4EAF5871ED6E8EA002B2DAA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F4EFD7AE1EDBFF2100D74A7E /* NewProblemCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProblemCategoryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		F4103B4B1ED2072A004A5936 /* ChevaunChanged */ = {
 			isa = PBXGroup;
 			children = (
+				F4EFD7AD1EDBFF0600D74A7E /* NewProblem */,
 				F4103B4C1ED2072A004A5936 /* AppDelegate.swift */,
 				F400DC461ED59D9B00188246 /* MainTabBarController.swift */,
 				F40080321ED5F677006931B1 /* UserProfileViewController.swift */,
@@ -103,10 +106,18 @@
 				F4103B581ED2072A004A5936 /* Info.plist */,
 				F4103B5E1ED207AD004A5936 /* GoogleService-Info.plist */,
 				F400DC441ED595D800188246 /* Extensions.swift */,
-				F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */,
 				F4EAF5851ED6D656002B2DAA /* RecentChatsViewController.swift */,
 			);
 			path = ChevaunChanged;
+			sourceTree = "<group>";
+		};
+		F4EFD7AD1EDBFF0600D74A7E /* NewProblem */ = {
+			isa = PBXGroup;
+			children = (
+				F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */,
+				F4EFD7AE1EDBFF2100D74A7E /* NewProblemCategoryCell.swift */,
+			);
+			name = NewProblem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +248,7 @@
 				F4103B4F1ED2072A004A5936 /* SignUpViewController.swift in Sources */,
 				F40080331ED5F677006931B1 /* UserProfileViewController.swift in Sources */,
 				F400DC451ED595D800188246 /* Extensions.swift in Sources */,
+				F4EFD7AF1EDBFF2100D74A7E /* NewProblemCategoryCell.swift in Sources */,
 				F4EAF5841ED6D62A002B2DAA /* NewProblemViewController.swift in Sources */,
 				F4EAF5881ED6E8EA002B2DAA /* LoginViewController.swift in Sources */,
 				F400DC471ED59D9B00188246 /* MainTabBarController.swift in Sources */,

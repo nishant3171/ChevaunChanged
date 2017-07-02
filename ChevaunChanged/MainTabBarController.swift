@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MainTabBarController: UITabBarController {
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController {
                 self.present(navController, animated: true, completion: nil)
             }
         }
-        
+        self.delegate = self
         setupViewControllers()
         
     }
@@ -31,7 +31,7 @@ class MainTabBarController: UITabBarController {
     func setupViewControllers() {
         
         let chatNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "ChatSelected"), unselectedImage: #imageLiteral(resourceName: "Chat"), viewController: RecentChatsViewController())
-        let newProblemNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "MainMedalSelected"), unselectedImage: #imageLiteral(resourceName: "Medal"), viewController: NewProblemViewController())
+        let newProblemNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "MainMedalSelected"), unselectedImage: #imageLiteral(resourceName: "Medal"))
         let userNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "ProfileSelected"), unselectedImage: #imageLiteral(resourceName: "Profile"), viewController: UserProfileViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         tabBar.tintColor = .black
@@ -52,5 +52,18 @@ class MainTabBarController: UITabBarController {
         navController.tabBarItem.selectedImage = selectedImage
         navController.tabBarItem.image = unselectedImage
         return navController
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let index = viewControllers?.index(of: viewController)
+        if index == 1 {
+            let layout = UICollectionViewFlowLayout()
+            let problemController = NewProblemViewController(collectionViewLayout: layout)
+            let navController = UINavigationController(rootViewController: problemController)
+            self.present(navController, animated: true, completion: nil)
+            return false
+        } else {
+            return true
+        }
     }
 }
