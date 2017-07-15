@@ -11,11 +11,13 @@ import UIKit
 class NewProblemViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let categoryCell = "Category"
+    var categories = ["RELATIONSHIP", "FASHION", "PEOPLE SKILLS", "DESIGN"]
+    var categoryImages = [#imageLiteral(resourceName: "RelationshipImage"), #imageLiteral(resourceName: "FashionImage"), #imageLiteral(resourceName: "PeopleSkillsImage"), #imageLiteral(resourceName: "DesignImage")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .green
         collectionView?.delegate = self
+        collectionView?.alwaysBounceVertical = true
         
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
@@ -32,13 +34,21 @@ class NewProblemViewController: UICollectionViewController, UICollectionViewDele
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return categories.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: categoryCell, for: indexPath) as! NewProblemCategoryCell
 //        cell.backgroundColor = .purple
+        cell.label = categories[indexPath.item]
+        cell.categoryImage = categoryImages[indexPath.item]
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let problemSelectedController = ProblemSelectedController(collectionViewLayout: UICollectionViewFlowLayout())
+        problemSelectedController.categoryLabel = categories[indexPath.item]
+        navigationController?.pushViewController(problemSelectedController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -59,8 +59,9 @@ class SignUpViewController: UIViewController, GIDSignInUIDelegate {
     }()
     
     let signUpButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
         button.layer.cornerRadius = 5.0
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -216,10 +217,13 @@ class SignUpViewController: UIViewController, GIDSignInUIDelegate {
                     }
                     print("Check Firebase Storage.")
                     
-                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-                    mainTabBarController.setupViewControllers()
+//                    guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+//                    mainTabBarController.setupViewControllers()
                     
-                    self.dismiss(animated: true, completion: nil)
+                    let categorySelectionController = CategorySelectionController(collectionViewLayout: UICollectionViewFlowLayout())
+                    self.navigationController?.pushViewController(categorySelectionController, animated: true)
+                    
+//                    self.dismiss(animated: true, completion: nil)
                 })
                 
             }

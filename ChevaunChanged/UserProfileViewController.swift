@@ -9,17 +9,61 @@
 import UIKit
 import Firebase
 
-class UserProfileViewController: UICollectionViewController {
+class UserProfileViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var user: User?
+    let cellId = "cellId"
+    let headerId = "headerId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView?.backgroundColor = .brown
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        
+        collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        
+        self.automaticallyAdjustsScrollViewInsets = false
         
         fetchUser()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        settingUpClearNavigationBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        settingUpNormalNavigationBar()
+    }
+    
+    
+    //Consider Extension: NavigationBar for setting it up.
+    func settingUpClearNavigationBar() {
+        
+        navigationController?.navigationBar.barStyle = UIBarStyle.black
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain
+            , target: nil, action: nil)
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        
+    }
+    
+    func settingUpNormalNavigationBar() {
+        
+        navigationController?.navigationBar.barStyle = UIBarStyle.default
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = nil
+        
     }
     
     func settingsButtonTapped() {
@@ -59,12 +103,21 @@ class UserProfileViewController: UICollectionViewController {
             print("Unable to fetch user:", error)
         }
     }
-}
-
-struct User {
-    var username: String
     
-    init(dictionary: [String: Any]) {
-        self.username = dictionary["username"] as? String ?? ""
+    //MARK: CollectionViewSetup
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! UserProfileHeader
+        header.completion = {
+            let editProfileController = EditProfileController()
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(editProfileController, animated: false)
+            }
+        }
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 300)
     }
 }
