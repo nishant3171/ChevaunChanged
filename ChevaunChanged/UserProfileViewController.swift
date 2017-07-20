@@ -12,19 +12,22 @@ import Firebase
 class UserProfileViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var user: User?
+    var categories = [String]()
     let cellId = "cellId"
     let headerId = "headerId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = .brown
+        collectionView?.backgroundColor = .white
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(CategoryCollectionCell.self, forCellWithReuseIdentifier: cellId)
         
         self.automaticallyAdjustsScrollViewInsets = false
         
         fetchUser()
+        fetchCategories()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,23 +94,66 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     fileprivate func fetchUser() {
         guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
         
-        FIRDatabase.database().reference().child("users").child(uid).observe(.value, with: { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            self.user = User(dictionary: dictionary)
+//        let uid = user?.uid ?? FIRAuth.auth()?.currentUser?.uid ?? ""
+        
+        FIRDatabase.fetchUserWithUID(uid: uid) { (user) in
+            self.user = user
+            
+            print(user.profileImageUrl)
+            
             if let username = self.user?.username {
                 self.navigationItem.title = username
+                self.collectionView?.reloadData()
             } else {
                 self.navigationItem.title = "Profile"
+                self.collectionView?.reloadData()
             }
-        }) { (error) in
-            print("Unable to fetch user:", error)
         }
     }
     
+    fileprivate func fetchCategories() {
+        
+        guard let currentUserId = FIRAuth.auth()?.currentUser?.uid else { return }
+        let categoriesRef = FIRDatabase.database().reference().child("categories").child(currentUserId)
+        categoriesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let categoriesDictionary = snapshot.value as? [String: Any] else { return }
+            categoriesDictionary.forEach({ (key, value) in
+                print(key)
+                self.categories.append(key)
+                print(self.categories.count)
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            })
+        }) { (error) in
+            print("Unable to set your selected categories", error)
+        }
+        
+    }
+    
     //MARK: CollectionViewSetup
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(categories.count)
+        return categories.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CategoryCollectionCell
+        cell.category = categories[indexPath.item]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 46)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! UserProfileHeader
+        header.user = user
         header.completion = {
             let editProfileController = EditProfileController()
             DispatchQueue.main.async {
@@ -118,6 +164,12 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 300)
+        
+        var headerHeight: CGFloat = 250
+        headerHeight += 108
+        headerHeight += 18
+        headerHeight += 12
+        
+        return CGSize(width: view.frame.width, height: headerHeight)
     }
 }

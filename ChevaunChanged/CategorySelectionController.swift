@@ -53,6 +53,7 @@ class CategorySelectionController: UICollectionViewController, UICollectionViewD
         }
         
         guard let currentUserId = FIRAuth.auth()?.currentUser?.uid else { return }
+        
         let ref = FIRDatabase.database().reference().child("categories").child(currentUserId)
         ref.updateChildValues(valueDictionary) { (error, ref) in
             if let error = error {

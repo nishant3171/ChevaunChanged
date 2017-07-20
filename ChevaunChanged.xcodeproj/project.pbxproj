@@ -17,12 +17,15 @@
 		F4103B541ED2072A004A5936 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4103B531ED2072A004A5936 /* Assets.xcassets */; };
 		F4103B571ED2072A004A5936 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4103B551ED2072A004A5936 /* LaunchScreen.storyboard */; };
 		F4103B5F1ED207AD004A5936 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4103B5E1ED207AD004A5936 /* GoogleService-Info.plist */; };
+		F414BF761F1CA3C80076FF23 /* CategoryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F414BF751F1CA3C80076FF23 /* CategoryCollectionCell.swift */; };
 		F44DC87D1F0E2C0D0005DDFE /* CategorySelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DC87C1F0E2C0D0005DDFE /* CategorySelectionCell.swift */; };
 		F44DC87F1F0E2CD90005DDFE /* CategorySelectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DC87E1F0E2CD90005DDFE /* CategorySelectionHeader.swift */; };
 		F46DA3F41F1761F0000876B4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46DA3F31F1761F0000876B4 /* User.swift */; };
 		F4767FA31F1389130061559B /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4767FA21F1389130061559B /* EditProfileController.swift */; };
 		F4A2F8201F0BB3B30076FB27 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2F81F1F0BB3B30076FB27 /* UserProfileHeader.swift */; };
 		F4C6B5B31F0D66B300A2330F /* CategorySelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C6B5B21F0D66B300A2330F /* CategorySelectionController.swift */; };
+		F4D3641B1F1A9D15008F671E /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3641A1F1A9D15008F671E /* FirebaseUtils.swift */; };
+		F4D3641D1F1A9F6E008F671E /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3641C1F1A9F6E008F671E /* CustomImageView.swift */; };
 		F4DD0F671F0FFD1C007CB14E /* ProblemSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DD0F661F0FFD1C007CB14E /* ProblemSelectedController.swift */; };
 		F4DD0F691F0FFEF2007CB14E /* ProblemSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DD0F681F0FFEF2007CB14E /* ProblemSelectedCell.swift */; };
 		F4EAF5841ED6D62A002B2DAA /* NewProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */; };
@@ -46,12 +49,15 @@
 		F4103B561ED2072A004A5936 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4103B581ED2072A004A5936 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4103B5E1ED207AD004A5936 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F414BF751F1CA3C80076FF23 /* CategoryCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCell.swift; sourceTree = "<group>"; };
 		F44DC87C1F0E2C0D0005DDFE /* CategorySelectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectionCell.swift; sourceTree = "<group>"; };
 		F44DC87E1F0E2CD90005DDFE /* CategorySelectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectionHeader.swift; sourceTree = "<group>"; };
 		F46DA3F31F1761F0000876B4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F4767FA21F1389130061559B /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		F4A2F81F1F0BB3B30076FB27 /* UserProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
 		F4C6B5B21F0D66B300A2330F /* CategorySelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectionController.swift; sourceTree = "<group>"; };
+		F4D3641A1F1A9D15008F671E /* FirebaseUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
+		F4D3641C1F1A9F6E008F671E /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		F4DD0F661F0FFD1C007CB14E /* ProblemSelectedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectedController.swift; sourceTree = "<group>"; };
 		F4DD0F681F0FFEF2007CB14E /* ProblemSelectedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemSelectedCell.swift; sourceTree = "<group>"; };
 		F4EAF5831ED6D62A002B2DAA /* NewProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProblemViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +129,8 @@
 				F4103B5E1ED207AD004A5936 /* GoogleService-Info.plist */,
 				F400DC441ED595D800188246 /* Extensions.swift */,
 				F4EAF5851ED6D656002B2DAA /* RecentChatsViewController.swift */,
+				F4D3641A1F1A9D15008F671E /* FirebaseUtils.swift */,
+				F4D3641C1F1A9F6E008F671E /* CustomImageView.swift */,
 			);
 			path = ChevaunChanged;
 			sourceTree = "<group>";
@@ -153,6 +161,7 @@
 				F40080321ED5F677006931B1 /* UserProfileViewController.swift */,
 				F4A2F81F1F0BB3B30076FB27 /* UserProfileHeader.swift */,
 				F4767FA21F1389130061559B /* EditProfileController.swift */,
+				F414BF751F1CA3C80076FF23 /* CategoryCollectionCell.swift */,
 			);
 			name = UserProfile;
 			sourceTree = "<group>";
@@ -293,10 +302,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4D3641B1F1A9D15008F671E /* FirebaseUtils.swift in Sources */,
 				F4103B4F1ED2072A004A5936 /* SignUpViewController.swift in Sources */,
 				F40080331ED5F677006931B1 /* UserProfileViewController.swift in Sources */,
 				F400DC451ED595D800188246 /* Extensions.swift in Sources */,
 				F4EFD7AF1EDBFF2100D74A7E /* NewProblemCategoryCell.swift in Sources */,
+				F414BF761F1CA3C80076FF23 /* CategoryCollectionCell.swift in Sources */,
 				F4EAF5841ED6D62A002B2DAA /* NewProblemViewController.swift in Sources */,
 				F44DC87F1F0E2CD90005DDFE /* CategorySelectionHeader.swift in Sources */,
 				F4EAF5881ED6E8EA002B2DAA /* LoginViewController.swift in Sources */,
@@ -304,6 +315,7 @@
 				F4A2F8201F0BB3B30076FB27 /* UserProfileHeader.swift in Sources */,
 				F4EAF5861ED6D656002B2DAA /* RecentChatsViewController.swift in Sources */,
 				F4C6B5B31F0D66B300A2330F /* CategorySelectionController.swift in Sources */,
+				F4D3641D1F1A9F6E008F671E /* CustomImageView.swift in Sources */,
 				F44DC87D1F0E2C0D0005DDFE /* CategorySelectionCell.swift in Sources */,
 				F4103B4D1ED2072A004A5936 /* AppDelegate.swift in Sources */,
 				F46DA3F41F1761F0000876B4 /* User.swift in Sources */,
