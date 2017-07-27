@@ -1,21 +1,24 @@
 //
-//  ProblemSelectedCell.swift
+//  RecentChatsCell.swift
 //  ChevaunChanged
 //
-//  Created by Nishant Punia on 07/07/17.
+//  Created by Nishant Punia on 24/07/17.
 //  Copyright © 2017 MLBNP. All rights reserved.
 //
 
 import UIKit
+import Firebase
 
-class ProblemSelectedCell: UICollectionViewCell {
+class RecentChatsCell: UICollectionViewCell {
     
-    var user: User? {
+    var message: Message? {
         didSet {
-            usernameLabel.text = user?.username
-            guard let profileImageUrl = user?.profileImageUrl else { return }
-            
-            profileImageView.settingUpImage(urlString: profileImageUrl)
+            guard let uid = message?.chatPartnerId() else { return }
+            FIRDatabase.fetchUserWithUID(uid: uid) { (user) in
+                
+                self.profileImageView.settingUpImage(urlString: user.profileImageUrl)
+                self.usernameLabel.text = user.username
+            }
             
         }
     }

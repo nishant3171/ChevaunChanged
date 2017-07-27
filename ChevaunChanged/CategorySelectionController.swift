@@ -46,13 +46,25 @@ class CategorySelectionController: UICollectionViewController, UICollectionViewD
     func doneTapped() {
         print("DoneTapped")
         
+        guard let currentUserId = FIRAuth.auth()?.currentUser?.uid else { return }
+        
         var valueDictionary = [String: Any]()
         
         for cat in category {
             valueDictionary[cat] = 1
+            
+            let selectedCategoryDictionary = [currentUserId: 1]
+            let selectedCategoryRef = FIRDatabase.database().reference().child("selectedCategory").child(cat)
+            
+            selectedCategoryRef.updateChildValues(selectedCategoryDictionary, withCompletionBlock: { (error, ref) in
+                if let error = error {
+                    print("Unable to add categories", error)
+                    return
+                }
+                
+                print("Selected Categories Done.")
+            })
         }
-        
-        guard let currentUserId = FIRAuth.auth()?.currentUser?.uid else { return }
         
         let ref = FIRDatabase.database().reference().child("categories").child(currentUserId)
         ref.updateChildValues(valueDictionary) { (error, ref) in

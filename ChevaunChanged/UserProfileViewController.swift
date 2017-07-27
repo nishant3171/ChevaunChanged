@@ -24,6 +24,8 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(CategoryCollectionCell.self, forCellWithReuseIdentifier: cellId)
         
+        collectionView?.reloadData()
+        
         self.automaticallyAdjustsScrollViewInsets = false
         
         fetchUser()
@@ -92,9 +94,9 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     }
     
     fileprivate func fetchUser() {
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+//        guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
         
-//        let uid = user?.uid ?? FIRAuth.auth()?.currentUser?.uid ?? ""
+        let uid = user?.uid ?? FIRAuth.auth()?.currentUser?.uid ?? ""
         
         FIRDatabase.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
@@ -160,6 +162,13 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
                 self.navigationController?.pushViewController(editProfileController, animated: false)
             }
         }
+        header.chatController = {
+            let expertsChatController = ExpertsChatController(collectionViewLayout: UICollectionViewFlowLayout())
+            expertsChatController.user = self.user
+            expertsChatController.title = self.user?.username
+            self.navigationController?.pushViewController(expertsChatController, animated: true)
+        }
+    
         return header
     }
     
@@ -169,6 +178,7 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         headerHeight += 108
         headerHeight += 18
         headerHeight += 12
+        headerHeight += 115
         
         return CGSize(width: view.frame.width, height: headerHeight)
     }

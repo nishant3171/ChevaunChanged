@@ -30,7 +30,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func setupViewControllers() {
         
-        let chatNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "ChatSelected"), unselectedImage: #imageLiteral(resourceName: "Chat"), viewController: RecentChatsViewController())
+        let chatNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "ChatSelected"), unselectedImage: #imageLiteral(resourceName: "Chat"), viewController: RecentChatsViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         let newProblemNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "MainMedalSelected"), unselectedImage: #imageLiteral(resourceName: "Medal"))
         let userNavController = templateTabBarController(selectedImage: #imageLiteral(resourceName: "ProfileSelected"), unselectedImage: #imageLiteral(resourceName: "Profile"), viewController: UserProfileViewController(collectionViewLayout: UICollectionViewFlowLayout()))
         
