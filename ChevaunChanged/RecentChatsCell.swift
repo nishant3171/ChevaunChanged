@@ -18,6 +18,16 @@ class RecentChatsCell: UICollectionViewCell {
                 
                 self.profileImageView.settingUpImage(urlString: user.profileImageUrl)
                 self.usernameLabel.text = user.username
+                self.lastMessageLabel.text = self.message?.message
+                
+                guard let timeStampDate = self.message?.creationDate else { return }
+//                let finalDate = Date().timeIntervalSince(timeStampDate)
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm:ss a"
+                
+                self.timeLabel.text = dateFormatter.string(from: timeStampDate)
+                
             }
             
         }
@@ -25,7 +35,9 @@ class RecentChatsCell: UICollectionViewCell {
     
     let profileImageView: CustomImageView = {
         let iv = CustomImageView()
-        iv.backgroundColor = .white
+        iv.backgroundColor = .black
+//        iv.image = #imageLiteral(resourceName: "MainMedalSelected")
+        
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         return iv
@@ -33,23 +45,45 @@ class RecentChatsCell: UICollectionViewCell {
     
     let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sikander Khan"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .white
+        label.textColor = .black
+        return label
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HH:MM:SS"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .darkGray
+        label.textAlignment = .right
+        return label
+    }()
+    
+    let lastMessageLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(white: 0, alpha: 0.6)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        backgroundColor = .white
         
         addSubview(profileImageView)
         addSubview(usernameLabel)
+        addSubview(timeLabel)
+        addSubview(lastMessageLabel)
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, centerX: nil, centerY: nil, topPadding: 8, leftPadding: 8, bottomPadding: 8, rightPadding: 0, height: 70, width: 70)
         profileImageView.layer.cornerRadius = 70 / 2
         
-        usernameLabel.anchor(top: topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 8, leftPadding: 16, bottomPadding: 8, rightPadding: 8, height: 24, width: 0)
+        usernameLabel.anchor(top: topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: timeLabel.rightAnchor, centerX: nil, centerY: nil, topPadding: 8, leftPadding: 16, bottomPadding: 8, rightPadding: 4, height: 24, width: 0)
+        
+        timeLabel.anchor(top: topAnchor, left: nil, bottom: usernameLabel.bottomAnchor, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 8, leftPadding: 0, bottomPadding: 0, rightPadding: 8, height: 0, width: 80)
+        
+        lastMessageLabel.anchor(top: usernameLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 4, leftPadding: 16, bottomPadding: 8, rightPadding: 8, height: 0, width: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

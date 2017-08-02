@@ -20,7 +20,7 @@ class ProblemSelectedController: UICollectionViewController, UICollectionViewDel
         super.viewDidLoad()
         navigationItem.title = categoryLabel
         
-        collectionView?.backgroundColor = .orange
+        collectionView?.backgroundColor = .mainGray()
         collectionView?.register(ProblemSelectedCell.self, forCellWithReuseIdentifier: cellId)
         
         fetchExperts()

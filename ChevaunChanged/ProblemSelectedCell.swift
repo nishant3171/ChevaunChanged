@@ -30,15 +30,14 @@ class ProblemSelectedCell: UICollectionViewCell {
     
     let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sikander Khan"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .white
+        label.textColor = .black
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        backgroundColor = .white
         
         addSubview(profileImageView)
         addSubview(usernameLabel)

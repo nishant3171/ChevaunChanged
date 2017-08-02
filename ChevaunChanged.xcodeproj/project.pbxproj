@@ -25,6 +25,7 @@
 		F4767FA31F1389130061559B /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4767FA21F1389130061559B /* EditProfileController.swift */; };
 		F4A1BDA51F25D48C0030F98E /* RecentChatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1BDA41F25D48C0030F98E /* RecentChatsCell.swift */; };
 		F4A2F8201F0BB3B30076FB27 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A2F81F1F0BB3B30076FB27 /* UserProfileHeader.swift */; };
+		F4A892301F2A77E000D232FA /* ExpertsChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8922F1F2A77E000D232FA /* ExpertsChatCell.swift */; };
 		F4A8F50E1F2333610011BE04 /* ExpertsChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A8F50D1F2333610011BE04 /* ExpertsChatController.swift */; };
 		F4C6B5B31F0D66B300A2330F /* CategorySelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C6B5B21F0D66B300A2330F /* CategorySelectionController.swift */; };
 		F4D3641B1F1A9D15008F671E /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3641A1F1A9D15008F671E /* FirebaseUtils.swift */; };
@@ -60,6 +61,7 @@
 		F4767FA21F1389130061559B /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		F4A1BDA41F25D48C0030F98E /* RecentChatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentChatsCell.swift; sourceTree = "<group>"; };
 		F4A2F81F1F0BB3B30076FB27 /* UserProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		F4A8922F1F2A77E000D232FA /* ExpertsChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpertsChatCell.swift; sourceTree = "<group>"; };
 		F4A8F50D1F2333610011BE04 /* ExpertsChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpertsChatController.swift; sourceTree = "<group>"; };
 		F4C6B5B21F0D66B300A2330F /* CategorySelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectionController.swift; sourceTree = "<group>"; };
 		F4D3641A1F1A9D15008F671E /* FirebaseUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				F4DD0F661F0FFD1C007CB14E /* ProblemSelectedController.swift */,
 				F4DD0F681F0FFEF2007CB14E /* ProblemSelectedCell.swift */,
 				F4A8F50D1F2333610011BE04 /* ExpertsChatController.swift */,
+				F4A8922F1F2A77E000D232FA /* ExpertsChatCell.swift */,
 			);
 			name = NewProblem;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				F44DC87D1F0E2C0D0005DDFE /* CategorySelectionCell.swift in Sources */,
 				F4103B4D1ED2072A004A5936 /* AppDelegate.swift in Sources */,
 				F41D8FD81F24A87A00AFAE62 /* Message.swift in Sources */,
+				F4A892301F2A77E000D232FA /* ExpertsChatCell.swift in Sources */,
 				F46DA3F41F1761F0000876B4 /* User.swift in Sources */,
 				F4767FA31F1389130061559B /* EditProfileController.swift in Sources */,
 				F4DD0F691F0FFEF2007CB14E /* ProblemSelectedCell.swift in Sources */,

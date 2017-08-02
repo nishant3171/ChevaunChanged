@@ -16,7 +16,9 @@ class RecentChatsViewController: UICollectionViewController, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .purple
+        
+        navigationItem.title = "Recent Chats"
+        collectionView?.backgroundColor = .white
         
         collectionView?.register(RecentChatsCell.self, forCellWithReuseIdentifier: cellId)
         
@@ -60,20 +62,53 @@ class RecentChatsViewController: UICollectionViewController, UICollectionViewDel
             guard let chatPartnerId = message.chatPartnerId() else { return }
             self.messagesDictionary[chatPartnerId] = message
             
-            self.messages = Array(self.messagesDictionary.values)
             
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
+            // Try to setup in different function with time delay.
+//            self.messages = Array(self.messagesDictionary.values)
+//            
+//            self.messages.sort(by: { (message1, message2) -> Bool in
+//                
+//                return message1.creationDate > message2.creationDate
+//            })
             
+//            DispatchQueue.main.async {
+//                self.collectionView?.reloadData()
+//            }
+            
+            self.attemptReloadOfTable()
             
         }) { (error) in
             print("Unable to fetch messages from the server:", error)
         }
     }
     
+    fileprivate func attemptReloadOfTable() {
+        self.timer?.invalidate()
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
+    }
+    
+    var timer: Timer?
+    
+    func handleReloadTable() {
+        self.messages = Array(self.messagesDictionary.values)
+        self.messages.sort(by: { (message1, message2) -> Bool in
+            
+            return message1.creationDate > message2.creationDate
+        })
+        
+        //this will crash because of background thread, so lets call this on dispatch_async main thread
+        DispatchQueue.main.async(execute: {
+            self.collectionView?.reloadData()
+        })
+    }
+    
     
     //MARK: CollectionViewSetup
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView?.collectionViewLayout.invalidateLayout()
+    }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let message = messages[indexPath.item]
@@ -82,6 +117,7 @@ class RecentChatsViewController: UICollectionViewController, UICollectionViewDel
         FIRDatabase.fetchUserWithUID(uid: chatUserId) { (user) in
             let expertChatController = ExpertsChatController(collectionViewLayout: UICollectionViewFlowLayout())
             expertChatController.user = user
+            expertChatController.navigationItem.title = user.username
             
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(expertChatController, animated: true)

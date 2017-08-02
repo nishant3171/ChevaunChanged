@@ -18,6 +18,12 @@ class UserProfileHeader: UICollectionViewCell {
             
             nameLabel.text = user?.name
             descriptionLabel.text = user?.description
+            
+            guard let currentUserId = FIRAuth.auth()?.currentUser?.uid else { return }
+            
+            if user?.uid != currentUserId {
+                chatButton.setTitle("Send Message", for: .normal)
+            }
         }
     }
     
@@ -37,16 +43,16 @@ class UserProfileHeader: UICollectionViewCell {
         return button
     }()
     
-    lazy var editButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Edit", for: .normal)
-        button.setTitleColor(.mainBlue(), for: .normal)
-        button.layer.borderColor = UIColor.mainBlue().cgColor
-        button.layer.borderWidth = 2
-        button.layer.cornerRadius = 4
-        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        return button
-    }()
+//    lazy var editButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("Edit", for: .normal)
+//        button.setTitleColor(.mainBlue(), for: .normal)
+//        button.layer.borderColor = UIColor.mainBlue().cgColor
+//        button.layer.borderWidth = 2
+//        button.layer.cornerRadius = 4
+//        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+//        return button
+//    }()
     
     let profileImageView: CustomImageView = {
         let iv = CustomImageView()
@@ -76,7 +82,6 @@ class UserProfileHeader: UICollectionViewCell {
     let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "I love talking to new people and help them achieve their big dreams. Entrepreneur. Life Coach. Living the dream life."
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
@@ -88,7 +93,7 @@ class UserProfileHeader: UICollectionViewCell {
         backgroundColor = .white
         
         addSubview(profileImageView)
-        addSubview(editButton)
+//        addSubview(editButton)
         addSubview(categoriesLabel)
         addSubview(chatButton)
         addSubview(nameLabel)
@@ -96,11 +101,11 @@ class UserProfileHeader: UICollectionViewCell {
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 0, leftPadding: 0, bottomPadding: 0, rightPadding: 0, height: 250, width: 0)
         
-        editButton.anchor(top: nil, left: nil, bottom: profileImageView.bottomAnchor, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 0, leftPadding: 0, bottomPadding: 16, rightPadding: 16, height: 30, width: 50)
+//        editButton.anchor(top: nil, left: nil, bottom: profileImageView.bottomAnchor, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 0, leftPadding: 0, bottomPadding: 16, rightPadding: 16, height: 30, width: 50)
         
-        nameLabel.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 32, leftPadding: 16, bottomPadding: 0, rightPadding: 16, height: 0, width: 0)
+        nameLabel.anchor(top: profileImageView.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: centerXAnchor, centerY: nil, topPadding: 32, leftPadding: 16, bottomPadding: 0, rightPadding: 16, height: 24, width: 0)
         
-        descriptionLabel.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 4, leftPadding: 16, bottomPadding: 32, rightPadding: 16, height: 0, width: 100)
+        descriptionLabel.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, centerX: nil, centerY: nil, topPadding: 4, leftPadding: 16, bottomPadding: 0, rightPadding: 16, height: 0, width: 0)
         
         chatButton.anchor(top: descriptionLabel.bottomAnchor, left: nil, bottom: nil, right: nil, centerX: centerXAnchor, centerY: nil, topPadding: 32, leftPadding: 0, bottomPadding: 0, rightPadding: 0, height: 44, width: 216)
         
@@ -118,7 +123,12 @@ class UserProfileHeader: UICollectionViewCell {
     }
     
     func chatButtonTapped() {
-        chatController?()
+        
+        if chatButton.titleLabel?.text == "Edit Profile" {
+            completion?()
+        } else {
+            chatController?()
+        }
     }
     
 }

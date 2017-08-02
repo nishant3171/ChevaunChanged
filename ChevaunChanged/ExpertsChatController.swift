@@ -9,11 +9,13 @@
 import UIKit
 import Firebase
 
-class ExpertsChatController: UICollectionViewController {
+class ExpertsChatController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    let cellId = "cellId"
+    var messages = [Message]()
     
     var user: User? {
         didSet {
-            print(user?.uid)
             observeMessages()
         }
     }
@@ -25,7 +27,24 @@ class ExpertsChatController: UICollectionViewController {
         let userMessagesRef = FIRDatabase.database().reference().child("user-messages").child(currentUserId).child(toId)
         
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
-            print(snapshot.key)
+            
+            let messageId = snapshot.key
+            let messagesRef = FIRDatabase.database().reference().child("messages").child(messageId)
+            
+            messagesRef.observe(.value, with: { (snapshot) in
+                guard let dictionary = snapshot.value as? [String: Any] else { return }
+                let message = Message(dictionary: dictionary)
+                
+                self.messages.append(message)
+                
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+                
+            }, withCancel: { (error) in
+                print("Unable to load messages from the server:", error)
+            })
+            
         }) { (error) in
             print("Unable to fetch messages from the server:", error)
         }
@@ -33,7 +52,12 @@ class ExpertsChatController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = .darkGray
+        collectionView?.backgroundColor = .white
+        //implement keyboard dismissal with tap on the screen
+        collectionView?.keyboardDismissMode = .interactive
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        collectionView?.register(ExpertsChatCell.self, forCellWithReuseIdentifier: cellId)
     }
     
     lazy var containerView: UIView = {
@@ -69,11 +93,6 @@ class ExpertsChatController: UICollectionViewController {
         textField.placeholder = "Enter Message"
         return textField
     }()
-    
-    //Not Working.
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        return true
-//    }
     
     func sendMessageButtonTapped() {
         
@@ -126,6 +145,58 @@ class ExpertsChatController: UICollectionViewController {
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    fileprivate func setupCell(cell: ExpertsChatCell, message: Message) {
+        if message.fromId == FIRAuth.auth()?.currentUser?.uid {
+            cell.bubbleView.backgroundColor = .mainBlue()
+            cell.messageTextView.textColor = .white
+            cell.bubbleLeftAnchor?.isActive = false
+            cell.bubbleRightAnchor?.isActive = true
+            
+        } else {
+            cell.bubbleView.backgroundColor = .mainGray()
+            cell.messageTextView.textColor = .black
+            cell.bubbleLeftAnchor?.isActive = true
+            cell.bubbleRightAnchor?.isActive = false
+        }
+    }
+    
+    //MARK: CollectionViewSetup
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ExpertsChatCell
+        let message = messages[indexPath.item]
+        cell.message = message
+        
+        let text = messages[indexPath.item].message
+        cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: text).width + 28
+        
+        setupCell(cell: cell, message: message)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let text = messages[indexPath.item].message
+        
+        var height: CGFloat = 80
+        height = estimatedFrameForText(text: text).height + 20
+        
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    fileprivate func estimatedFrameForText(text: String) -> CGRect {
+        
+        let size = CGSize(width: 200, height: 10000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 
     

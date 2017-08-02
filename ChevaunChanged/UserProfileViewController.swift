@@ -21,6 +21,9 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
         
         collectionView?.backgroundColor = .white
         
+        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 64, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 64, right: 0)
+        
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(CategoryCollectionCell.self, forCellWithReuseIdentifier: cellId)
         
@@ -174,12 +177,23 @@ class UserProfileViewController: UICollectionViewController, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
+        
+        
         var headerHeight: CGFloat = 250
-        headerHeight += 108
-        headerHeight += 18
-        headerHeight += 12
-        headerHeight += 115
+        headerHeight += 32 + 24 + 4 + 32 + 44 + 32 + 20
+        
+        if let descriptionText = user?.description {
+            headerHeight += estimatedFrameForText(text: descriptionText).height
+        }
+        
         
         return CGSize(width: view.frame.width, height: headerHeight)
+    }
+    
+    fileprivate func estimatedFrameForText(text: String) -> CGRect {
+        
+        let size = CGSize(width: 200, height: 10000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 }
